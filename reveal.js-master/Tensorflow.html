@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Tensorflow</title>
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+		<link rel="stylesheet" href="css/reveal.css">
+<!--		<link rel="stylesheet" href="css/theme/pydata.css" id="theme">  -->
+		<link rel="stylesheet" href="css/theme/night.css" id="theme">
+
+		<!-- Code syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<section>
+					<h1 style="text-align:center">Tensorflow</h1>
+				</section>
+
+                 <section>
+                        <h3 style="text-align:center">Starting with Tensorflow</h3>
+                        <pre>
+							<code class="python">
+import tensorflow as tf
+
+a = tf.constant("Hello World !!")
+sess = tf.Session()
+
+print sess.run(a)
+                        	</code>
+						</pre>
+                  </section>
+
+				<section>
+						<h3 style="text-align:center"> What is TensorFlow </h3> <br>
+						<p style="text-align:left"> Tensorflow is an interface for expressing machine learning algorithms and an implementation for executing such algorithms </p> <br>
+						<p style="text-align:left"> A computation expressed using Tensorflow can be executed with little or no change on a wide variety of heterogeneous systems </p>
+                </section>
+
+				<section style="text-align:left">
+						<h3 style="text-align:center"> Deep Learning Tools </h3>  <br>
+<ul>
+						<li> Theano, Tensorflow
+ 							<ul>
+						    	<li> Python as programming interface </li>
+								<li> Tensorflow has better support for distributed systems </li>
+								<li> Tensorflow is one of the popular project on <a href="https://github.com/aymericdamien/TopDeepLearning">github</a>. </li>
+							</ul> 
+						</li>
+
+						<li> Torch 
+							<ul>
+								<li> Lua as programming interface </li>
+							</ul>
+						</li>
+						<li> Caffe, CNTK
+							<ul>
+								<li> C++ as main programming interface </li>
+							</ul>
+						</li>
+						<li> Comparision with other tools can be found on <a href="https://en.wikipedia.org/wiki/Comparison_of_deep_learning_software">Wikipedia</a> </li>
+<ul>
+                 </section>
+
+                 <section  style="text-align:left">
+						<h3 style="text-align:center"> TensorFlow Computation Graph </h3>  <br>
+						<li> Computation is described as directed graph </li> <br>
+						<li> Edges represents data flow node represents operations  </li> <br>
+						<li> Provides extensions to support looping control on graph, maintaing state etc  </li> <br>
+						<li> computations graph are constructed using C++/Python programming interface  </li>
+				 </section>
+
+
+				 <section style="text-align:left">
+						<h3 style="text-align:center"> TensorFlow Operations </h3> <br>
+						<li> Operations represents abstract computation (matrix multiplication, add) </li> <br>
+						<li> Operations are polymorphic over different tensor elements </li> <br>
+						<li> Device specific kernels executes the operations </li>
+				 </section>
+
+                 <section style="text-align:left">
+                        <h3 style="text-align:center">Tensorflow Programming Model </h3> <br>
+                    	<li> Construction phase which assembles the graph </li> <br>
+						<li> Execution phase that uses session to run the operations on the graph </li>
+                 </section>
+
+                 <section style="text-align:left">
+                        <h3 style="text-align:center">TensorFlow Session Object </h3>  <br>
+                    	<li> A session object encapsulates the environment in which Operation objects are executed and Tensor objects are evaualted. </li> <br>
+						<li> A session may own resources, such as variables, queues, and readers. It is important to release these resources when they are no longer required. To do this, either invoke the close() method on the session, or use the session as a context manager </li>
+                 </section>
+
+                 <section style="text-align:left">
+	                 <h3 style="text-align:center">Resources</h3>
+                     <li><a href="https://www.tensorflow.org/versions/r0.9/tutorials/index.html">Tutorials </a></li>
+                     <li><a href="https://www.tensorflow.org/api_docs/python/index.html">Python API Reference </a></li>
+                     <li><a href="http://learningtensorflow.com/">Learning Tensorflow </a></li>
+                 </section>
+			</div>
+
+<!--
+		<div class="footer">
+			<div style="text-align:left; float:left; width:15%; margin-left:2%; margin-top:1%">				
+					<img src="images/continuum_analytics_b&w.png">
+				</div>
+			<div style="text-align:right; float:right; margin-right:5%; margin-top:1%">
+				<p style=" font-size:24px; height:36px"><img style="vertical-align:middle" class="social-icon" src="images/twitter-icon.png"><a href="https://twitter.com/ch_doig"> ch_doig</a>
+		        <img style="vertical-align:middle" class="social-icon" src="images/github-icon.png"><a href="https://github.com/chdoig"> chdoig </a></p>
+	        </div>
+        </div>
+
+		</div>
+
+-->
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+
+			// Full list of configuration options available at:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+				// Optional reveal.js plugins
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true },
+					{ src: 'plugin/notes/notes.js', async: true }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>
+
