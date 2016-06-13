@@ -1,1 +1,7 @@
 *~
+*.zip
+try-tf-master
+try-tf-master.zip
+hidden.py
+softmax.py
+*checkpoint*
