@@ -5,3 +5,5 @@ try-tf-master.zip
 hidden.py
 softmax.py
 *checkpoint*
+train_logs
+test_logs

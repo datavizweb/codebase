@@ -224,7 +224,7 @@ def train_model():
     train the model
     """
     p = Params()
-    data = DataSet(dtype="linear")
+    data = DataSet(dtype="moon")
 
     ##
     ## get the train and test
@@ -245,11 +245,17 @@ def train_model():
     ## create single layer nn model
     ##
     model = NNModel()
-    weights, bias = model.init_weights_linear(feat_dim, 
-                                              p.hidden_dim, p.num_classes)
+    weights, bias = model.init_weights(feat_dim, 
+                                       p.hidden_dim, p.num_classes)
 
     ## final softmax layer
-    y = tf.nn.softmax(model.network_linear(x, weights, bias), name="softmax")
+    with tf.name_scope("Wx_b") as scope:
+        y = tf.nn.softmax(model.network(x, weights, bias), name="softmax")
+
+    ##
+    ## collect stat
+    ##
+    y_hist = tf.histogram_summary("y", y)
 
     ##
     ## define the cost function and optimization to use
@@ -262,8 +268,16 @@ def train_model():
     ##
     ## Evaluation.
     ##
-    correct_prediction = tf.equal(tf.argmax(y, 1), tf.argmax(y_, 1))
-    accuracy = tf.reduce_mean(tf.cast(correct_prediction, "float"))
+    with tf.name_scope('accuracy'):
+        with tf.name_scope('correct_prediction'):
+            correct_prediction = tf.equal(tf.argmax(y, 1), tf.argmax(y_, 1))
+        with tf.name_scope('accuracy'):
+            accuracy = tf.reduce_mean(tf.cast(correct_prediction, "float"))
+
+        tf.scalar_summary('accuracy', accuracy)
+
+    # Merge all the summaries and write them out to /tmp/mnist_logs
+    merged = tf.merge_all_summaries()
 
     ##
     ## now create the session and run the train
@@ -271,13 +285,27 @@ def train_model():
     with tf.Session() as sess:
         sess.run(tf.initialize_all_variables())
 
+        train_writer = tf.train.SummaryWriter("./train_logs", sess.graph)
+        test_writer = tf.train.SummaryWriter("./test_logs", sess.graph)
+
         ##
         ## Run the model training for num_epochsIterate and train.
         ##
         for epoch in xrange(p.num_epochs):
+            if (epoch % 10) == 0:
+                summary, acc = sess.run([merged, accuracy], 
+                                        feed_dict = {x: test_data, 
+                                                     y_: test_labels})
+                test_writer.add_summary(summary, epoch)
+                print "Accuracy at step %d %f" % (epoch, acc)
+
             for x_data, y_labels in data:
-                sess.run(cost, feed_dict = {x: x_data, y_: y_labels})
-            
+                train_summary, _ = sess.run([merged, cost], 
+                                            feed_dict = {x: x_data, y_: y_labels})
+
+            if (epoch % 10) == 0:
+                train_writer.add_summary(train_summary, epoch)
+
         print "Accuracy:", sess.run(accuracy, 
                                     feed_dict = {x: test_data, 
                                                  y_: test_labels})
